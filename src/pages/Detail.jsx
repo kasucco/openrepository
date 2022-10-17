@@ -1,15 +1,13 @@
 import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { addReply, deleteReply } from "./redux/modules/replySlice";
-import nextId from "react-id-generator";
+import { addReply } from "../redux/modules/replySlice";
 
 function Detail() {
   const GlobalReply = useSelector((state) => state);
   // const [reply, setReply] = useState([]);
   const replyRef = useRef();
   const dispatch = useDispatch();
-  const id = nextId();
   return (
     <div>
       <FlexColumn>
@@ -30,7 +28,6 @@ function Detail() {
             <button
               onClick={() => {
                 const replies = {
-                  id: id,
                   reply: replyRef.current.value,
                 };
                 console.log(replies);
