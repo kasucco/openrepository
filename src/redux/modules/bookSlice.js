@@ -28,7 +28,7 @@ const initialState = {
 };
 
 const bookSlice = createSlice({
-  name: "bookreview",
+  name: "book",
   initialState,
   reducers: {
     addReview: (state, action) => {
