@@ -5,7 +5,7 @@ import { addReply } from "../redux/modules/replySlice";
 
 function Detail() {
   const GlobalReply = useSelector((state) => state);
-  // const [reply, setReply] = useState([]);
+  const [reply, setReply] = useState([]);
   const replyRef = useRef();
   const dispatch = useDispatch();
   return (
