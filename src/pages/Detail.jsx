@@ -5,9 +5,27 @@ import { addReply } from "../redux/modules/replySlice";
 
 function Detail() {
   const GlobalReply = useSelector((state) => state);
+  console.log(GlobalReply.reply.reply);
   // const [reply, setReply] = useState([]);
   const replyRef = useRef();
   const dispatch = useDispatch();
+  const id = Date.now();
+
+  function plusReply() {
+    const replies = {
+      reply: replyRef.current.value,
+      id: id,
+    };
+
+    dispatch(addReply(replies));
+  }
+
+  // function deleteBook() {
+  //   dispatch();
+  // }
+
+  function deleteReply() {}
+
   return (
     <div>
       <FlexColumn>
@@ -19,30 +37,27 @@ function Detail() {
 
           <ButtonBox>
             <button>수정하기</button>
+            {/* <button
+              onClick={() => {
+                dispatch(deleteBook(id));
+              }}
+            >
+              삭제하기
+            </button> */}
           </ButtonBox>
         </ContentsBox>
 
         <FlexColumn>
           <FlexRow>
             <input ref={replyRef} />
-            <button
-              onClick={() => {
-                const replies = {
-                  reply: replyRef.current.value,
-                };
-                console.log(replies);
-                dispatch(addReply(replies));
-              }}
-            >
-              댓글 등록하기
-            </button>
+            <button onClick={() => plusReply()}>댓글 등록하기</button>
           </FlexRow>
 
-          {/* {GlobalReply.map((item) => {
+          {GlobalReply.reply.reply.map((item) => {
             return (
-              <div key={item}>
+              <div key={item.id}>
                 {item}
-                <button
+                {/* <button
                   onClick={() =>
                     deleteReply(() => {
                       dispatch(deleteReply(item.id));
@@ -50,10 +65,10 @@ function Detail() {
                   }
                 >
                   댓글삭제하기
-                </button>
+                </button> */}
               </div>
             );
-          })} */}
+          })}
         </FlexColumn>
       </FlexColumn>
     </div>

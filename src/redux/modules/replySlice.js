@@ -8,11 +8,10 @@ const replySlice = createSlice({
   name: "reply",
   initialState,
   reducers: {
-    // addReply: (state, action) => {
-    //   {
-    //     [...state.reply, action.payload];
-    //   }
-    // },
+    addReply: (state, action) => {
+      return { ...state, reply: [...state.reply, action.payload] };
+    },
+
     deleteReply: (state, action) => {
       state.filter((item) => {
         if (state.id !== action.payload.id) {
@@ -20,7 +19,8 @@ const replySlice = createSlice({
         }
       });
     },
-    // editReply: (state, action) => {},
+
+    editReply: (state, action) => {},
   },
 });
 
