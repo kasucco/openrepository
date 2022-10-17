@@ -3,9 +3,12 @@ import { useNavigate } from "react-router-dom/dist";
 import styled from "styled-components";
 import Layout from "../components/share/Layout";
 import Button from "../components/share/Buttons";
+import { useSelector } from "react-redux";
 
 function Main() {
   // const navigate = useNavigate();
+  const review = useSelector((state) => state.book.reviews);
+  console.log(review);
   return (
     <Layout>
       <Button
@@ -17,10 +20,15 @@ function Main() {
       </Button>
       <div>
         <GridUl>
-          <LiSize>
-            <TextSize>글</TextSize>
-            <p>내용</p>
-          </LiSize>
+          {review.map((item) => {
+            return (
+              <LiSize key={item.id}>
+                <TextSize>{item.title}</TextSize>
+                <p>{item.content}</p>
+              </LiSize>
+            );
+          })}
+
           <LiSize>
             <TextSize>글</TextSize>
             <p>내용</p>
