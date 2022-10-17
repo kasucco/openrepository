@@ -1,15 +1,17 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import "../../font/font.css";
 
 function Header() {
+  const navigate = useNavigate();
   return (
     // eslint-disable-next-line react/jsx-filename-extension
     <Head>
       <InnerHead
-      // onClick={() => {
-      //   navigate("/");
-      // }}
+        onClick={() => {
+          navigate("/");
+        }}
       >
         <HeadH1>북적북적</HeadH1>
         <HeadP>나만의 책 기록장</HeadP>
@@ -33,6 +35,7 @@ const Head = styled.div`
 
 const InnerHead = styled.div`
   font-family: "ONE-Mobile-Title";
+  cursor: pointer;
 `;
 
 const HeadH1 = styled.h1`

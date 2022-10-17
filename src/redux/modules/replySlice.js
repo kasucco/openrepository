@@ -8,16 +8,12 @@ const replySlice = createSlice({
   name: "reply",
   initialState,
   reducers: {
-    // addReply: (state, action) => {
-    //   {
-    //     [...state.reply, action.payload];
-    //   }
-    // },
+    addReply: (state, action) => {
+      return [...state, action.payload];
+    },
     deleteReply: (state, action) => {
       state.filter((item) => {
-        if (state.id !== action.payload.id) {
-          return item;
-        }
+        return state.filter((item) => item.id !== action.payload);
       });
     },
     // editReply: (state, action) => {},
