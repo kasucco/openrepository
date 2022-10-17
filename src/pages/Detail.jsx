@@ -4,9 +4,10 @@ import styled from "styled-components";
 import { addReply, deleteReply, editReply } from "../redux/modules/replySlice";
 
 function Detail() {
-  const GlobalReply = useSelector((state) => state.reply);
-  console.log(GlobalReply);
-  // const [reply, setReply] = useState([]);
+
+  const GlobalReply = useSelector((state) => state);
+  const [reply, setReply] = useState([]);
+  
   const replyRef = useRef();
   const dispatch = useDispatch();
   const id = Date.now();
