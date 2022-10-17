@@ -11,18 +11,18 @@ function Detail() {
   const dispatch = useDispatch();
   const id = Date.now();
 
-  function plusReply() {
+  function dispatchAdd() {
     const replies = {
       reply: replyRef.current.value,
       id: id,
     };
-
     dispatch(addReply(replies));
   }
 
-  function deleteReply(id) {
+  function dispatchDelete(id) {
     dispatch(deleteReply(id));
   }
+
   // function deleteBook() {
   //   dispatch();
   // }
@@ -51,7 +51,7 @@ function Detail() {
         <FlexColumn>
           <FlexRow>
             <input ref={replyRef} />
-            <button onClick={() => plusReply()}>댓글 등록하기</button>
+            <button onClick={() => dispatchAdd()}>댓글 등록하기</button>
           </FlexRow>
 
           {GlobalReply.replies.reply.map((item) => {
@@ -59,11 +59,9 @@ function Detail() {
               <div key={item.id}>
                 {item.reply}
                 <button
-                  onClick={() =>
-                    deleteReply(() => {
-                      dispatch(deleteReply(item.id));
-                    })
-                  }
+                  onClick={() => {
+                    dispatchDelete(item.id);
+                  }}
                 >
                   댓글삭제하기
                 </button>
