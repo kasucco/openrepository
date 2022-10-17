@@ -2,10 +2,10 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { reply: ["안녕하세요"] };
+const initialState = { reply: ["안녕하세요"], id: 12321 };
 
 const replySlice = createSlice({
-  name: "reply",
+  name: "replies",
   initialState,
   reducers: {
     addReply: (state, action) => {

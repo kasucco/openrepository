@@ -1,11 +1,11 @@
 import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { addReply } from "../redux/modules/replySlice";
+import { addReply, deleteReply } from "../redux/modules/replySlice";
 
 function Detail() {
   const GlobalReply = useSelector((state) => state);
-  console.log(GlobalReply.reply.reply);
+  console.log(GlobalReply);
   // const [reply, setReply] = useState([]);
   const replyRef = useRef();
   const dispatch = useDispatch();
@@ -20,11 +20,12 @@ function Detail() {
     dispatch(addReply(replies));
   }
 
+  function deleteReply(id) {
+    dispatch(deleteReply(id));
+  }
   // function deleteBook() {
   //   dispatch();
   // }
-
-  function deleteReply() {}
 
   return (
     <div>
@@ -53,11 +54,11 @@ function Detail() {
             <button onClick={() => plusReply()}>댓글 등록하기</button>
           </FlexRow>
 
-          {GlobalReply.reply.reply.map((item) => {
+          {GlobalReply.replies.reply.map((item) => {
             return (
               <div key={item.id}>
-                {item}
-                {/* <button
+                {item.reply}
+                <button
                   onClick={() =>
                     deleteReply(() => {
                       dispatch(deleteReply(item.id));
@@ -65,7 +66,7 @@ function Detail() {
                   }
                 >
                   댓글삭제하기
-                </button> */}
+                </button>
               </div>
             );
           })}
