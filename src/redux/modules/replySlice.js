@@ -13,12 +13,9 @@ const replySlice = createSlice({
     },
 
     deleteReply: (state, action) => {
-      state.filter((item) => {
-        // console.log(action.payload);
-        // console.log(item.id);
-        // return item.id !== action.payload;
-        // return item.reply;
-      });
+      return (state = state.filter((item) => {
+        return item.id !== action.payload;
+      }));
     },
 
     editReply: (state, action) => {},
