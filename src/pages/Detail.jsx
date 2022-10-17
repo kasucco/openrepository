@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { addReply, deleteReply } from "../redux/modules/replySlice";
+import { addReply, deleteReply, editReply } from "../redux/modules/replySlice";
 
 function Detail() {
   const GlobalReply = useSelector((state) => state);
@@ -10,6 +10,8 @@ function Detail() {
   const replyRef = useRef();
   const dispatch = useDispatch();
   const id = Date.now();
+
+  const [mode, setMode] = useState("READ");
 
   function dispatchAdd() {
     const replies = {
@@ -23,9 +25,15 @@ function Detail() {
     dispatch(deleteReply(id));
   }
 
+  function dispatchEdit(id, vlaue) {
+    const editItem = { id: id, value: vlaue };
+    dispatch(editReply(editItem));
+  }
+
   // function deleteBook() {
   //   dispatch();
   // }
+  const contents = null;
 
   return (
     <div>
@@ -59,7 +67,9 @@ function Detail() {
                 >
                   댓글삭제하기
                 </button>
-                <button>댓글수정하기</button>
+                <button onClick={(e) => dispatchEdit(item.id, e.target.value)}>
+                  댓글수정하기
+                </button>
               </div>
             );
           })}
