@@ -1,12 +1,16 @@
 import React from "react";
 import styled from "styled-components";
-import Layout from "./Layout";
-import Button from "./Button";
+import Layout from "../components/share/Layout";
+import Button from "../components/share/Buttons";
 import { useState, useCallback } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addReview } from "../redux/modules/bookSlice";
+import { useEffect } from "react";
 
 function Form() {
   const dispatch = useDispatch();
+  const globalReview = useSelector((state) => state.book);
+
   const [review, setReview] = useState({
     id: "",
     title: "",
@@ -16,11 +20,12 @@ function Form() {
     const { name, value } = e.target;
     setReview({ ...review, id: Date.now(), [name]: value });
   };
-  const onclickSubmitHandler = useCallback(() => {
-    console.log(review);
+  const onclickSubmitHandler = () => {
+    dispatch(addReview(review));
+    console.log(globalReview);
+
     setReview({ title: "", content: "" });
-    console.log(review);
-  }, []);
+  };
 
   const isValid = review.title.length >= 10 && review.content.length >= 10;
   const handleButtonValid = () => {

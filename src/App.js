@@ -7,7 +7,6 @@ function App() {
     // eslint-disable-next-line react/jsx-filename-extension
     <div>
       <Router />
-      <Main />
     </div>
   );
 }
