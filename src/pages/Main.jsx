@@ -4,7 +4,6 @@ import styled from "styled-components";
 import Layout from "../components/share/Layout";
 import Button from "../components/share/Buttons";
 import { useSelector } from "react-redux";
-
 function Main() {
   const navigate = useNavigate();
   const review = useSelector((state) => state.book.reviews);

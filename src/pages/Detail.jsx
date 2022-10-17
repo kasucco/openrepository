@@ -1,13 +1,41 @@
 import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { addReply } from "../redux/modules/replySlice";
+import { addReply, deleteReply, editReply } from "../redux/modules/replySlice";
 
 function Detail() {
+
   const GlobalReply = useSelector((state) => state);
-  // const [reply, setReply] = useState([]);
+  const [reply, setReply] = useState([]);
+  
   const replyRef = useRef();
   const dispatch = useDispatch();
+  const id = Date.now();
+
+  const [mode, setMode] = useState("READ");
+
+  function dispatchAdd() {
+    const replies = {
+      reply: replyRef.current.value,
+      id: id,
+    };
+    dispatch(addReply(replies));
+  }
+
+  function dispatchDelete(id) {
+    dispatch(deleteReply(id));
+  }
+
+  function dispatchEdit(id, vlaue) {
+    const editItem = { id: id, value: vlaue };
+    dispatch(editReply(editItem));
+  }
+
+  // function deleteBook() {
+  //   dispatch();
+  // }
+  const contents = null;
+
   return (
     <div>
       <FlexColumn>
@@ -19,41 +47,33 @@ function Detail() {
 
           <ButtonBox>
             <button>수정하기</button>
+            <button>삭제하기</button>
           </ButtonBox>
         </ContentsBox>
 
         <FlexColumn>
           <FlexRow>
             <input ref={replyRef} />
-            <button
-              onClick={() => {
-                const replies = {
-                  reply: replyRef.current.value,
-                };
-                console.log(replies);
-                dispatch(addReply(replies));
-              }}
-            >
-              댓글 등록하기
-            </button>
+            <button onClick={() => dispatchAdd()}>댓글 등록하기</button>
           </FlexRow>
 
-          {/* {GlobalReply.map((item) => {
+          {GlobalReply.map((item) => {
             return (
-              <div key={item}>
-                {item}
+              <div key={item.id}>
+                {item.reply}
                 <button
-                  onClick={() =>
-                    deleteReply(() => {
-                      dispatch(deleteReply(item.id));
-                    })
-                  }
+                  onClick={() => {
+                    dispatchDelete(item.id);
+                  }}
                 >
                   댓글삭제하기
                 </button>
+                <button onClick={(e) => dispatchEdit(item.id, e.target.value)}>
+                  댓글수정하기
+                </button>
               </div>
             );
-          })} */}
+          })}
         </FlexColumn>
       </FlexColumn>
     </div>

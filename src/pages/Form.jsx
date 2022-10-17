@@ -5,10 +5,12 @@ import Button from "../components/share/Buttons";
 import { useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addReview } from "../redux/modules/bookSlice";
+import { useEffect } from "react";
 
 function Form() {
   const dispatch = useDispatch();
   const globalReview = useSelector((state) => state.book);
+
   const [review, setReview] = useState({
     id: "",
     title: "",
@@ -20,6 +22,7 @@ function Form() {
   };
   const onclickSubmitHandler = () => {
     dispatch(addReview(review));
+    console.log(globalReview);
 
     setReview({ title: "", content: "" });
   };
