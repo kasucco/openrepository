@@ -1,11 +1,8 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Detail from "../pages/Detail";
-<<<<<<< HEAD
-=======
 import Form from "../pages/Form";
 import Main from "../pages/Main";
->>>>>>> main
 
 function Router() {
   return (
