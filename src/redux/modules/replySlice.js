@@ -2,21 +2,22 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { reply: ["안녕하세요"], id: 12321 };
+const initialState = [];
 
 const replySlice = createSlice({
   name: "replies",
   initialState,
   reducers: {
     addReply: (state, action) => {
-      return { ...state, reply: [...state.reply, action.payload] };
+      return [...state, action.payload];
     },
 
     deleteReply: (state, action) => {
-      state.reply.filter((item) => {
-        if (state.id !== action.payload.id) {
-          return item;
-        }
+      state.filter((item) => {
+        // console.log(action.payload);
+        // console.log(item.id);
+        // return item.id !== action.payload;
+        // return item.reply;
       });
     },
 

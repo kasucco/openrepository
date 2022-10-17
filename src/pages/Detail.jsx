@@ -38,13 +38,7 @@ function Detail() {
 
           <ButtonBox>
             <button>수정하기</button>
-            {/* <button
-              onClick={() => {
-                dispatch(deleteBook(id));
-              }}
-            >
-              삭제하기
-            </button> */}
+            <button>삭제하기</button>
           </ButtonBox>
         </ContentsBox>
 
@@ -54,7 +48,7 @@ function Detail() {
             <button onClick={() => dispatchAdd()}>댓글 등록하기</button>
           </FlexRow>
 
-          {GlobalReply.replies.reply.map((item) => {
+          {GlobalReply.replies.map((item) => {
             return (
               <div key={item.id}>
                 {item.reply}
@@ -65,6 +59,7 @@ function Detail() {
                 >
                   댓글삭제하기
                 </button>
+                <button>댓글수정하기</button>
               </div>
             );
           })}
