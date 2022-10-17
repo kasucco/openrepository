@@ -9,13 +9,12 @@ const replySlice = createSlice({
   initialState,
   reducers: {
     addReply: (state, action) => {
-      return [...state, action.payload];
+      return [...state.reply, action.payload];
     },
-
     deleteReply: (state, action) => {
-      return (state = state.filter((item) => {
-        return item.id !== action.payload;
-      }));
+      state.filter((item) => {
+        return state.filter((item) => item.id !== action.payload);
+      });
     },
 
     editReply: (state, action) => {},
