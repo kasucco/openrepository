@@ -5,10 +5,10 @@ import Header from "./Header";
 
 function Layout({ children }) {
   return (
-    <>
+    <LayoutTop>
       <Header />
       <Layouts>{children}</Layouts>
-    </>
+    </LayoutTop>
   );
 }
 
@@ -18,9 +18,14 @@ function Layout({ children }) {
 
 export default Layout;
 
+const LayoutTop = styled.div`
+  width: 1200px;
+  margin: 0 auto;
+`;
+
 const Layouts = styled.div`
   box-sizing: border-box;
-  padding: 30px 0;
+  padding: 30px;
   border: 2px solid #000;
   border-radius: 10px;
 `;
