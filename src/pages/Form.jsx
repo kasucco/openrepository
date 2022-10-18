@@ -6,8 +6,10 @@ import { useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addReview } from "../redux/modules/bookSlice";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Form() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const globalReview = useSelector((state) => state.book);
 
@@ -55,7 +57,13 @@ function Form() {
           ></Contentinput>
         </Inputbox>
         <Buttonbox>
-          <div>이전으로</div>
+          <Button
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            이전으로
+          </Button>
           <Button
             onClick={handleButtonValid}
             style={{
