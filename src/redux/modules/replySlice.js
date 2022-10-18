@@ -75,6 +75,7 @@ const replySlice = createSlice({
   extraReducers: {
     [__getReplies.fulfilled]: (state, action) => {
       state.isLoading = true;
+      console.log("get", action.payload);
       state.replies = action.payload;
     },
     [__postReplies.fulfilled]: (state, action) => {
