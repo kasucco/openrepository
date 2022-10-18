@@ -4,14 +4,14 @@ import Layout from "../components/share/Layout";
 import Button from "../components/share/Buttons";
 import { useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addReview } from "../redux/modules/bookSlice";
+import { __createReviews } from "../redux/modules/bookSlice";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Form() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const globalReview = useSelector((state) => state.book);
+  const globalReview = useSelector((state) => state.book.review);
 
   const [review, setReview] = useState({
     id: "",
@@ -23,7 +23,7 @@ function Form() {
     setReview({ ...review, id: Date.now(), [name]: value });
   };
   const onclickSubmitHandler = () => {
-    dispatch(addReview(review));
+    dispatch(__createReviews(review));
     console.log(globalReview);
 
     setReview({ title: "", content: "" });
