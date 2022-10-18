@@ -14,7 +14,12 @@ function Main() {
         <GridUl>
           {review.map((item) => {
             return (
-              <LiSize key={item.id}>
+              <LiSize
+                onClick={() => {
+                  navigate(`/detail/${item.id}`);
+                }}
+                key={item.id}
+              >
                 <TextSize>{item.title}</TextSize>
                 <p>{item.content}</p>
               </LiSize>
