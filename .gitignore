@@ -1,4 +1,3 @@
->>>>>>> main
 # Logs
 logs
 *.log
@@ -127,6 +126,4 @@ dist
 .yarn/unplugged
 .yarn/build-state.yml
 .yarn/install-state.gz
-=======
 
->>>>>>> main
