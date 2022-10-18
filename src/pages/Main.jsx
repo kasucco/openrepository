@@ -4,15 +4,28 @@ import styled from "styled-components";
 import Layout from "../components/share/Layout";
 import Button from "../components/share/Buttons";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import axios from "axios";
+import { __getReviews } from "../redux/modules/bookSlice";
+import { useDispatch } from "react-redux";
+
 function Main() {
   const navigate = useNavigate();
-  const review = useSelector((state) => state.book.reviews);
+  const reviews = useSelector((state) => state.book.reviews);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(__getReviews());
+  }, []);
+  console.log(reviews);
+
   return (
     <Layout>
       <Button onClick={() => navigate("form")}>등록하기</Button>
       <div>
         <GridUl>
-          {review.map((item) => {
+          {reviews.map((item) => {
             return (
               <LiSize
                 onClick={() => {

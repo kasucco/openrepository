@@ -4,7 +4,7 @@ import Layout from "../components/share/Layout";
 import Button from "../components/share/Buttons";
 import { useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addReview } from "../redux/modules/bookSlice";
+import { __createReviews } from "../redux/modules/bookSlice";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useInput from "../hooks/useInput";
@@ -15,7 +15,7 @@ function Form() {
   const dispatch = useDispatch();
 
   const onclickSubmitHandler = () => {
-    dispatch(addReview(inputs));
+    dispatch(__createReviews(inputs));
   };
 
   const isValid = inputs.title.length >= 10 && inputs.content.length >= 10;
