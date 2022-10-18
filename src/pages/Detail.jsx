@@ -4,52 +4,48 @@ import styled from "styled-components";
 import { addReply, deleteReply, editReply } from "../redux/modules/replySlice";
 import { useEffect } from "react";
 import { selectReview } from "../redux/modules/bookSlice";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import Layout from "../components/share/Layout";
+import Button from "../components/share/Buttons";
+import {
+  __postReplies,
+  __getReplies,
+  __deleteReplies,
+} from "../redux/modules/replySlice";
 
 function Detail() {
   const globalReview = useSelector((state) => state.book.review);
   const reviewid = useParams();
-  console.log(reviewid.id);
-  console.log(globalReview);
-
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(selectReview(reviewid.id));
-    console.log(reviewid.id);
   }, []);
 
-  const GlobalReply = useSelector((state) => state.reply);
-  const [reply, setReply] = useState([]);
+  const GlobalReply = useSelector((state) => state.reply.replies);
 
   const replyRef = useRef();
   const dispatch = useDispatch();
   const id = Date.now();
-
-  const [mode, setMode] = useState("READ");
 
   function dispatchAdd() {
     const replies = {
       reply: replyRef.current.value,
       id: id,
     };
-    dispatch(addReply(replies));
+    dispatch(__postReplies(replies));
   }
 
-  function dispatchDelete(id) {
-    dispatch(deleteReply(id));
+  function dispatchDelete(itemId) {
+    dispatch(__deleteReplies(itemId));
   }
 
-  function dispatchEdit(id, vlaue) {
-    const editItem = { id: id, value: vlaue };
-    dispatch(editReply(editItem));
-  }
-
-  // function deleteBook() {
-  //   dispatch();
-  // }
-  const contents = null;
+  //mount 됐을때 dispatch 하기
+  useEffect(() => {
+    dispatch(__getReplies());
+  }, []);
 
   return (
-    <div>
+    <Layout>
       <FlexColumn>
         <ContentsBox>
           <TitleBox>
@@ -65,30 +61,30 @@ function Detail() {
 
         <FlexColumn>
           <FlexRow>
-            <input ref={replyRef} />
-            <button onClick={() => dispatchAdd()}>댓글 등록하기</button>
+            <InputSt placeholder="댓글을 입력해주세요" ref={replyRef} />
+            <Button onClick={() => dispatchAdd()}>댓글 등록하기</Button>
           </FlexRow>
 
           {GlobalReply.map((item) => {
             return (
               <div key={item.id}>
                 {item.reply}
-                <button
+                <Button
                   onClick={() => {
                     dispatchDelete(item.id);
                   }}
                 >
                   댓글삭제하기
-                </button>
-                <button onClick={(e) => dispatchEdit(item.id, e.target.value)}>
+                </Button>
+                {/* <Button onClick={(e) => dispatchEdit(item.id, e.target.value)}>
                   댓글수정하기
-                </button>
+                </Button> */}
               </div>
             );
           })}
         </FlexColumn>
       </FlexColumn>
-    </div>
+    </Layout>
   );
 }
 
@@ -97,49 +93,42 @@ export default Detail;
 const FlexColumn = styled.div`
   display: flex;
   flex-direction: column;
-
   justify-content: center;
   align-items: center;
-
-  border: 1px solid gray;
-
   max-width: 1200px;
-  width: 95%;
+  width: 100%;
 `;
 
 const FlexRow = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  width: 100%;
+`;
 
-  justify-content: center;
-  align-items: center;
-
-  background-color: beige;
+const InputSt = styled.input`
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #000;
+  padding: 10px 0;
+  margin-bottom: 20px;
+  padding-left: 10px;
+  outline: none;
 `;
 
 const ContentsBox = styled.div`
   display: flex;
   flex-direction: row;
-
-  justify-content: center;
-  align-items: center;
-
-  background-color: green;
-
-  width: 800px;
-  height: 300px;
+  width: auto;
 `;
 
 const TitleBox = styled.div`
-  width: 1000px;
-  height: 200px;
-  border: 1px solid gray;
+  width: auto;
+  padding: 50px 0;
 `;
 
 const ButtonBox = styled.div`
   display: flex;
   flex-direction: column;
-
   justify-content: center;
   align-items: center;
 `;

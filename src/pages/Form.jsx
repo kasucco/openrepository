@@ -7,29 +7,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { addReview } from "../redux/modules/bookSlice";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import useInput from "../hooks/useInput";
 
 function Form() {
+  const [inputs, changeHandle] = useInput();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const globalReview = useSelector((state) => state.book);
 
-  const [review, setReview] = useState({
-    id: "",
-    title: "",
-    content: "",
-  });
-  const onChangeHandler = (e) => {
-    const { name, value } = e.target;
-    setReview({ ...review, id: Date.now(), [name]: value });
-  };
   const onclickSubmitHandler = () => {
-    dispatch(addReview(review));
-    console.log(globalReview);
-
-    setReview({ title: "", content: "" });
+    dispatch(addReview(inputs));
   };
 
-  const isValid = review.title.length >= 10 && review.content.length >= 10;
+  const isValid = inputs.title.length >= 10 && inputs.content.length >= 10;
   const handleButtonValid = () => {
     if (!isValid) {
       alert("10글자 이상 입력하세요");
@@ -39,42 +28,49 @@ function Form() {
   };
   return (
     <Layout>
+      <Buttonbox>
+        <Button
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          이전으로
+        </Button>
+      </Buttonbox>
       <Formbox>
         <Inputbox>
-          <label>제목</label>
-          <Titleinput
-            onChange={onChangeHandler}
-            type="text"
-            name="title"
-            value={review.title}
-          ></Titleinput>
-          <label>내용</label>
-          <Contentinput
-            onChange={onChangeHandler}
-            type="text"
-            name="content"
-            value={review.content}
-          ></Contentinput>
+          <FlexBox>
+            <LabelBox>제목</LabelBox>
+            <Titleinput
+              onChange={changeHandle}
+              type="text"
+              name="title"
+              value={inputs.title}
+              placeholder="10자 이상 입력해주세요"
+            ></Titleinput>
+          </FlexBox>
+          <FlexBox>
+            <LabelBox>내용</LabelBox>
+            <Contentinput
+              onChange={changeHandle}
+              type="text"
+              name="content"
+              value={inputs.content}
+              placeholder="10자 이상 입력해주세요"
+            ></Contentinput>
+          </FlexBox>
         </Inputbox>
-        <Buttonbox>
-          <Button
-            onClick={() => {
-              navigate("/");
-            }}
-          >
-            이전으로
-          </Button>
-          <Button
-            onClick={handleButtonValid}
-            style={{
-              width: "100px",
-              height: "200px",
-            }}
-          >
-            작성완료
-          </Button>
-        </Buttonbox>
       </Formbox>
+      <Buttonbox>
+        <Button
+          onClick={() => {
+            handleButtonValid();
+            navigate("/");
+          }}
+        >
+          작성완료
+        </Button>
+      </Buttonbox>
     </Layout>
   );
 }
@@ -84,20 +80,30 @@ export default Form;
 const Formbox = styled.div`
   padding: 20px;
   background: transparent;
-  border: 1px solid #666;
   border-radius: 10px;
   display: flex;
+`;
+
+const LabelBox = styled.label`
+  margin-bottom: 10px;
+  font-weight: bold;
 `;
 
 const Inputbox = styled.div`
   padding: 20px;
   background: transparent;
-  border: 1px solid #666;
   border-radius: 10px;
   display: flex;
-  width: 80%;
+  width: 100%;
   flex-direction: column;
-  float: left;
+`;
+
+const FlexBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  :first-child {
+    margin-bottom: 30px;
+  }
 `;
 
 const Titleinput = styled.input`
@@ -105,22 +111,18 @@ const Titleinput = styled.input`
   background: transparent;
   border-radius: 10px;
   border: 1px solid #666;
-  background-color: #666;
 `;
 
-const Contentinput = styled.input`
+const Contentinput = styled.textarea`
   padding: 20px;
   background: transparent;
   height: 200px;
   border-radius: 10px;
   border: 1px solid #666;
-  background-color: #666;
+  resize: none;
 `;
 
 const Buttonbox = styled.div`
-  padding: 20px;
   background: transparent;
-  background-color: #666;
-  flex-direction: column;
-  justify-content: space-between;
+  text-align: right;
 `;
