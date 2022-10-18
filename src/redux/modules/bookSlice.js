@@ -109,6 +109,15 @@ const bookSlice = createSlice({
 
       // Store에 있는 todos에 서버에서 가져온 todos를 넣습니다.
     },
+    [__deleteReviews.fulfilled]: (state, { payload }) => {
+      state.isLoading = true; // 네트워크 요청이 끝났으니, false로 변경합니다.
+      state.reviews = state.reviews.filter((item) => {
+        console.log(item.id, payload);
+        return item.id !== payload;
+      });
+
+      // Store에 있는 todos에 서버에서 가져온 todos를 넣습니다.
+    },
   },
 });
 
