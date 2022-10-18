@@ -1,8 +1,27 @@
 // src/redux/modules/replySlice.js
 
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+//서버 초깃값
+// const initialState = [{ reply: "Hi", id: id }];
 
-const initialState = [];
+const initialState = {
+  replies: [],
+  isLoading: false,
+  error: null,
+};
+
+export const __getReplies = createAsyncThunk(
+  "replies/getReplies",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await axios.get("http://localhost:3001/replies");
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 const replySlice = createSlice({
   name: "replies",
@@ -17,8 +36,17 @@ const replySlice = createSlice({
         return item.id !== action.payload;
       }));
     },
-
-    editReply: (state, action) => {},
+  },
+  extraReducers: {
+    [__getReplies.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__getReplies.fulfilled]: (state, action) => {
+      state.isLoading = true;
+    },
+    [__getReplies.pending]: (state, action) => {
+      state.isLoading = true;
+    },
   },
 });
 
