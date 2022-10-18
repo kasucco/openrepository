@@ -2,12 +2,24 @@ import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { addReply, deleteReply, editReply } from "../redux/modules/replySlice";
+import { useEffect } from "react";
+import { selectReview } from "../redux/modules/bookSlice";
+import { useParams } from "react-router-dom";
 
 function Detail() {
+  const globalReview = useSelector((state) => state.book.review);
+  const reviewid = useParams();
+  console.log(reviewid.id);
+  console.log(globalReview);
 
-  const GlobalReply = useSelector((state) => state);
+  useEffect(() => {
+    dispatch(selectReview(reviewid.id));
+    console.log(reviewid.id);
+  }, []);
+
+  const GlobalReply = useSelector((state) => state.reply);
   const [reply, setReply] = useState([]);
-  
+
   const replyRef = useRef();
   const dispatch = useDispatch();
   const id = Date.now();
@@ -41,8 +53,8 @@ function Detail() {
       <FlexColumn>
         <ContentsBox>
           <TitleBox>
-            <h1>title</h1>
-            <h2>contents</h2>
+            <h1>{globalReview.title}</h1>
+            <h2>{globalReview.content}</h2>
           </TitleBox>
 
           <ButtonBox>

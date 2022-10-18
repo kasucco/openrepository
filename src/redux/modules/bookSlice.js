@@ -37,10 +37,24 @@ const bookSlice = createSlice({
         reviews: [action.payload, ...state.reviews],
       };
     },
+    deleteReview: (state, action) => {
+      return state.reviews.filter((item) => item.id !== action.payload);
+    },
+
+    selectReview: (state, action) => {
+      return {
+        ...state,
+        review: state.reviews.find((item) => {
+          if (item.id == Number(action.payload)) {
+            return item;
+          }
+        }),
+      };
+    },
   },
 });
 
 // 액션크리에이터는 컴포넌트에서 사용하기 위해 export 하고
-export const { addReview } = bookSlice.actions;
+export const { addReview, deleteReview, selectReview } = bookSlice.actions;
 // reducer 는 configStore에 등록하기 위해 export default 합니다.
 export default bookSlice.reducer;
