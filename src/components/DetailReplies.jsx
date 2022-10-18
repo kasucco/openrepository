@@ -60,11 +60,11 @@ function DetailReplies() {
   // console.log(mapReplies);
 
   return (
-    <ContentsBoxUnder>
-      <InputBox>
-        <input ref={replyRef} />
+    <FlexColumn>
+      <FlexRow>
+        <InputSt placeholder="댓글을 입력해주세요" ref={replyRef} />
         <Button onClick={() => dispatchAdd()}>댓글 등록하기</Button>
-      </InputBox>
+      </FlexRow>
 
       {GlobalReply.map((item) => {
         return (
@@ -77,67 +77,57 @@ function DetailReplies() {
             >
               댓글삭제하기
             </Button>
-            {/* <button onClick={(e) => dispatchEdit(item.id, e.target.value)}>
+            {/* <Button onClick={(e) => dispatchEdit(item.id, e.target.value)}>
                   댓글수정하기
-                </button> */}
+                </Button> */}
           </div>
         );
       })}
-
-      {GlobalReply.map((item) => {
-        return <div></div>;
-      })}
-    </ContentsBoxUnder>
+    </FlexColumn>
   );
 }
 
 export default DetailReplies;
 
-const DetailLayout = styled.div`
+const FlexColumn = styled.div`
   display: flex;
   flex-direction: column;
-
   justify-content: center;
   align-items: center;
-
-  border: 1px solid gray;
-
   max-width: 1200px;
-  width: 95%;
+  width: 100%;
 `;
 
 const FlexRow = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  width: 100%;
+`;
 
-  justify-content: center;
-  align-items: center;
-
-  background-color: beige;
+const InputSt = styled.input`
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #000;
+  padding: 10px 0;
+  margin-bottom: 20px;
+  padding-left: 10px;
+  outline: none;
 `;
 
 const ContentsBox = styled.div`
   display: flex;
   flex-direction: row;
-
-  justify-content: center;
-  align-items: center;
-
-  border: 2px solid gray;
-  border-radius: 20px;
-
-  margin: 20px;
-  width: 600px;
-  height: 300px;
+  width: auto;
 `;
 
-const ContentsBoxUnder = styled(ContentsBox)`
-  height: 200px;
+const TitleBox = styled.div`
+  width: auto;
+  padding: 50px 0;
+`;
 
+const ButtonBox = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-const InputBox = styled.div`
-  margin: 30px;
+  justify-content: center;
+  align-items: center;
 `;

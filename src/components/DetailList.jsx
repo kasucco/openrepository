@@ -52,33 +52,21 @@ export default DetailList;
 const ContentsBox = styled.div`
   display: flex;
   flex-direction: row;
-
-  justify-content: center;
-  align-items: center;
-
-  border: 2px solid gray;
-  border-radius: 20px;
-
-  margin: 20px;
-  width: 600px;
-  height: 300px;
+  width: auto;
 `;
 
 const ButtonBox = styled.div`
   display: flex;
   flex-direction: column;
-
   justify-content: center;
   align-items: center;
 `;
 
 const TitleBox = styled.div`
-  width: 400px;
-  height: 250px;
-  border: 2px solid gray;
-  border-radius: 20px;
-
-  box-sizing: border-box;
-  padding: 40px;
-  margin: 0 20px;
+  width: 100%;
+  padding: 50px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
