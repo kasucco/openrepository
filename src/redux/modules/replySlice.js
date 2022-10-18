@@ -60,7 +60,8 @@ export const __deleteReplies = createAsyncThunk(
       const data = await axios.delete(
         `http://localhost:3001/replies/${payload}`
       );
-      return thunkAPI.fulfillWithValue(data.data);
+      //payload를 return 해야 아래 reducer에서 값을 받아 쓸 수 있음.
+      return data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -72,33 +73,20 @@ const replySlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    [__getReplies.pending]: (state) => {
-      state.isLoading = true;
-    },
     [__getReplies.fulfilled]: (state, action) => {
       state.isLoading = true;
       state.replies = action.payload;
     },
-    [__getReplies.rejected]: (state) => {
-      state.isLoading = false;
-    },
-    //
-    [__postReplies.pending]: (state) => {
-      state.isLoading = true;
-    },
     [__postReplies.fulfilled]: (state, action) => {
-      state.isLoading = false;
-      state.replies = action.payload;
-    },
-    [__postReplies.rejected]: (state, action) => {
-      state.isLoading = false;
-      //
+      state.isLoading = true;
+      state.replies.push(action.payload);
     },
     [__deleteReplies.fulfilled]: (state, action) => {
-      // console.log(action.meta.arg);
+      console.log("action.payload", action.payload);
+      console.log("action", action);
       state.replies = state.replies.filter((item) => {
         // console.log(action.payload);
-        // 이게 왜?..
+        // 이게 왜?.. action.payload 로 안들어오는 이유
         return item.id !== action.meta.arg;
       });
     },

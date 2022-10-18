@@ -10,14 +10,14 @@ import {
   __getReplies,
   __deleteReplies,
 } from "../redux/modules/replySlice";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 import Button from "../components/share/Buttons";
 
 function Detail() {
   const globalReview = useSelector((state) => state.book.review);
   const reviewid = useParams();
-
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(selectReview(reviewid.id));
   }, []);
@@ -78,6 +78,13 @@ function Detail() {
           </TitleBox>
 
           <ButtonBox>
+            <Button
+              onClick={() => {
+                navigate("/");
+              }}
+            >
+              이전으로
+            </Button>
             <Button>수정하기</Button>
             <Button>삭제하기</Button>
           </ButtonBox>
@@ -105,6 +112,10 @@ function Detail() {
                 </button> */}
               </div>
             );
+          })}
+
+          {GlobalReply.map((item) => {
+            return <div></div>;
           })}
         </ContentsBoxUnder>
       </DetailLayout>
