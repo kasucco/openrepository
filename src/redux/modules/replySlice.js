@@ -31,6 +31,7 @@ const initialState = {
 export const __postReplies = createAsyncThunk(
   "replies/postReplies",
   async (payload, thunkAPI) => {
+    console.log(payload);
     try {
       const data = await axios.post("http://localhost:3001/replies", payload);
       return thunkAPI.fulfillWithValue(data.data);

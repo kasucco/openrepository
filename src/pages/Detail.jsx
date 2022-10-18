@@ -16,7 +16,7 @@ import Button from "../components/share/Buttons";
 
 function Detail() {
   const globalReview = useSelector((state) => state.book.review);
-  const reviewid = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
   useEffect(() => {
     dispatch(selectReview(reviewid.id));
@@ -37,12 +37,13 @@ function Detail() {
 
   const replyRef = useRef();
   const dispatch = useDispatch();
-  const id = Date.now();
+  const replyid = Date.now();
 
   function dispatchAdd() {
     const replies = {
       reply: replyRef.current.value,
-      id: id,
+      id: replyid,
+      pageId: id,
     };
     dispatch(__postReplies(replies));
   }
