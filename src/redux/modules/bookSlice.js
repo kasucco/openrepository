@@ -54,7 +54,6 @@ export const __deleteReviews = createAsyncThunk(
   "book/deleteReviews",
   async (payload, thunkAPI) => {
     try {
-      console.log(payload);
       const data = await axios.delete(
         `http://localhost:3001/reviews/${payload}`
       );
