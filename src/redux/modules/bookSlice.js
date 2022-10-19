@@ -127,6 +127,7 @@ const bookSlice = createSlice({
     },
     [__deleteReviews.fulfilled]: (state, action) => {
       state.isLoading = true;
+      console.log(state.reviews);
       state.reviews = state.reviews.filter((item) => {
         return item.id !== action.payload;
       });

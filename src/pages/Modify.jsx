@@ -31,6 +31,7 @@ function Modify() {
       alert("10글자 이상 입력하세요");
     } else {
       onclickEditHandler();
+      navigate("/");
     }
   };
   return (
@@ -64,7 +65,6 @@ function Modify() {
               name="content"
               defaultValue={globalReview.content}
               placeholder="10자 이상 수정할 내용을 입력해주세요"
-
             ></Contentinput>
           </FlexBox>
         </Inputbox>

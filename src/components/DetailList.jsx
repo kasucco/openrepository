@@ -13,6 +13,7 @@ const DetailList = () => {
   const globalReview = useSelector((state) => state.book.review);
 
   const reviewid = useParams();
+  console.log(globalReview);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();

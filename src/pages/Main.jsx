@@ -4,11 +4,10 @@ import styled from "styled-components";
 import Layout from "../components/share/Layout";
 import Button from "../components/share/Buttons";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
+
 import axios from "axios";
 import { __getReviews } from "../redux/modules/bookSlice";
 import { useDispatch } from "react-redux";
-
 
 function Main() {
   const navigate = useNavigate();
