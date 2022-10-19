@@ -95,7 +95,7 @@ const replySlice = createSlice({
       state.isLoading = true;
       state.replies.push(action.payload);
     },
-    //풀필드
+    //딜리트
     [__deleteReplies.fulfilled]: (state, action) => {
       // console.log("action.payload", action.payload);
       // console.log("action", action);
@@ -105,7 +105,13 @@ const replySlice = createSlice({
         return item.id !== action.meta.arg;
       });
     },
-    [__patchReplies.fulfilled]: (state, action) => {},
+    [__patchReplies.fulfilled]: (state, { payload }) => {
+      console.log(payload);
+      state.replies.forEach((item) => {
+        if (item.id === payload.id) return (item.reply = payload.reply);
+        return item;
+      });
+    },
   },
 });
 
