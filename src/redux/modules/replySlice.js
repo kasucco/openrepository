@@ -19,7 +19,10 @@ export const __getReplies = createAsyncThunk(
   "replies/getReplies",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get("http://localhost:3001/replies");
+      const data = await axios.get(
+        "https://hanghae-react-week3.herokuapp.com/replies"
+      );
+      console.log(data.data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -30,9 +33,11 @@ export const __getReplies = createAsyncThunk(
 export const __postReplies = createAsyncThunk(
   "replies/postReplies",
   async (payload, thunkAPI) => {
-    console.log(payload);
     try {
-      const data = await axios.post("http://localhost:3001/replies", payload);
+      const data = await axios.post(
+        "https://hanghae-react-week3.herokuapp.com/replies",
+        payload
+      );
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -45,7 +50,7 @@ export const __deleteReplies = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.delete(
-        `http://localhost:3001/replies/${payload}`
+        `https://hanghae-react-week3.herokuapp.com/replies${payload}`
       );
       //payload를 return 해야 아래 reducer에서 값을 받아 쓸 수 있음.
       return data.data;
@@ -62,7 +67,7 @@ export const __patchReplies = createAsyncThunk(
     console.log(payload.itemId);
     try {
       const data = await axios.patch(
-        `http://localhost:3001/replies/${payload.itemId}`,
+        `https://hanghae-react-week3.herokuapp.com/replies${payload.itemId}`,
         { reply: payload.editValue }
       );
 
@@ -95,7 +100,7 @@ const replySlice = createSlice({
       // console.log("action.payload", action.payload);
       // console.log("action", action);
       state.replies = state.replies.filter((item) => {
-
+        // console.log(action.payload);
         // payload에 담아주지 않았기 때문에 id는 메타에 담겨서 내려옴
         return item.id !== action.meta.arg;
       });
