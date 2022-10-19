@@ -18,27 +18,29 @@ import Button from "../components/share/Buttons";
 import Layout from "./share/Layout";
 
 function DetailReplies() {
+  // 자료 설명
+  // state 조회 :
+  // 최상단 : reply, reviews 리듀서 (객체)
+  // 다음 :
   const GlobalReply = useSelector((state) => state.reply.replies);
-  console.log(GlobalReply);
   const dispatch = useDispatch();
   const pageId = useParams();
-  // console.log("해당 페이지 id", pageId.id);
-
-  //DB를 어떻게 사용해야 할지 모르겠음.
-
-  //하나하나 넣은뒤 useEffect로 값이 변화할때마다 띄우기.
-
-  //onClick => dispatch(__postReply())
 
   //액션객체를 보낼 때 axios.post를 이용할 수 있는 thunk 사용
 
   //리듀서로 값을 변화시키는 동시에 비동기로 서버에 저장한다.
 
+  // 디스패치 -> 미들웨어 -> 액션객체
+
+  //댓글 작성 값
   const replyRef = useRef();
+  //댓글 수정 값
   const editRef = useRef();
 
+  //댓글 하나하나 구분 id
   const id = Date.now();
 
+  //댓글을 추가 (post)
   function dispatchAdd() {
     const replies = {
       reply: replyRef.current.value,
@@ -50,20 +52,23 @@ function DetailReplies() {
     replyRef.current.value = "";
   }
 
+  //댓글 삭제 (delete)
   function dispatchDelete(itemId) {
     dispatch(__deleteReplies(itemId));
   }
 
-  //mount 됐을 때 dispatch하기
-
+  //mount 됐을 때 fetch
   useEffect(() => {
     dispatch(__getReplies());
   }, []);
-  //모드 사용하기 실험
+
+  //모드로 댓글 수정 토글 만들기
   const [mode, setMode] = useState("READ");
 
-  // READ 모드일 때 댓글 값 관리 state, 그리고 item id도
+  // READ 모드일 때 댓글 값 관리 state,
   const [itemValue, setItemValue] = useState(null);
+
+  // READ 모드일 때 넘겨준 id
   const [_itemId, setItemId] = useState(null);
 
   // 모드변경 토글 (인자값으로 받아오는 댓글값)
@@ -79,7 +84,7 @@ function DetailReplies() {
       setItemId(itemId);
     }
   }
-
+  // 모드 변경시 렌더링할 값
   let contents = null;
 
   if (mode === "READ") {

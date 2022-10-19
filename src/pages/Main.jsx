@@ -3,8 +3,10 @@ import { useNavigate } from "react-router-dom/dist";
 import styled from "styled-components";
 import Layout from "../components/share/Layout";
 import Button from "../components/share/Buttons";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import axios from "axios";
 import { __getReviews } from "../redux/modules/bookSlice";
+import { useDispatch } from "react-redux";
 
 function Main() {
   const navigate = useNavigate();
