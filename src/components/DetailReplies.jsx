@@ -17,6 +17,10 @@ import Layout from "./share/Layout";
 
 function DetailReplies() {
   const GlobalReply = useSelector((state) => state.reply.replies);
+  console.log(GlobalReply);
+  const dispatch = useDispatch();
+  const pageId = useParams();
+  // console.log("해당 페이지 id", pageId.id);
 
   //DB를 어떻게 사용해야 할지 모르겠음.
 
@@ -29,15 +33,17 @@ function DetailReplies() {
   //리듀서로 값을 변화시키는 동시에 비동기로 서버에 저장한다.
 
   const replyRef = useRef();
-  const dispatch = useDispatch();
   const id = Date.now();
 
   function dispatchAdd() {
     const replies = {
       reply: replyRef.current.value,
       id: id,
+      pageId: pageId,
     };
     dispatch(__postReplies(replies));
+
+    replyRef.current.value = "";
   }
 
   function dispatchDelete(itemId) {
@@ -50,15 +56,6 @@ function DetailReplies() {
     dispatch(__getReplies());
   }, []);
 
-  //렌더링할 서버데이터 불러오기
-
-  // const fetchReplies = async () => {
-  //   const { data } = await axios.get("http://localhost:3001/replies");
-  //   setReplies(data);
-  // };
-
-  // console.log(mapReplies);
-
   return (
     <FlexColumn>
       <FlexRow>
@@ -67,21 +64,25 @@ function DetailReplies() {
       </FlexRow>
 
       {GlobalReply.map((item) => {
-        return (
-          <div key={item.id}>
-            {item.reply}
-            <Button
-              onClick={() => {
-                dispatchDelete(item.id);
-              }}
-            >
-              댓글삭제하기
-            </Button>
-            {/* <Button onClick={(e) => dispatchEdit(item.id, e.target.value)}>
-                  댓글수정하기
-                </Button> */}
-          </div>
-        );
+        //맵을 돌릴 때 id가 같은 댓글만 띄워줘!
+        if (pageId.id === item.pageId.id) {
+          return (
+            <div key={item.id}>
+              {item.reply}
+              <Button
+                onClick={() => {
+                  dispatchDelete(item.id);
+                }}
+              >
+                댓글삭제하기
+              </Button>
+              {/* <Button onClick={(e) => dispatchEdit(item.id, e.target.value)}>
+                    댓글수정하기
+                  </Button> */}
+            </div>
+          );
+        }
+        // console.log("아이디 확인", pageId.id, item.pageId.id);
       })}
     </FlexColumn>
   );

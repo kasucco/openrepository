@@ -10,23 +10,22 @@ import axios from "axios";
 // };
 
 const initialState = {
-  replies: [
-    {
-      reply: "Hi",
-      id: 12312312,
-    },
-    {
-      reply: "21321",
-      id: 1666087897863,
-    },
-    {
-      reply: "21321",
-      id: 1666087910852,
-    },
-  ],
+  replies: [],
   isLoading: false,
   error: null,
 };
+
+export const __getReplies = createAsyncThunk(
+  "replies/getReplies",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await axios.get("http://localhost:3001/replies");
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 export const __postReplies = createAsyncThunk(
   "replies/postReplies",
@@ -41,22 +40,9 @@ export const __postReplies = createAsyncThunk(
   }
 );
 
-export const __getReplies = createAsyncThunk(
-  "replies/getReplies",
-  async (payload, thunkAPI) => {
-    try {
-      const data = await axios.get("http://localhost:3001/replies");
-      return thunkAPI.fulfillWithValue(data.data);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
-
 export const __deleteReplies = createAsyncThunk(
   "replies/deleteReplies",
   async (payload, thunkAPI) => {
-    // console.log(payload);
     try {
       const data = await axios.delete(
         `http://localhost:3001/replies/${payload}`
@@ -74,21 +60,24 @@ const replySlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
+    //겟
     [__getReplies.fulfilled]: (state, action) => {
       state.isLoading = true;
       console.log("get", action.payload);
       state.replies = action.payload;
     },
+    //포스트
     [__postReplies.fulfilled]: (state, action) => {
       state.isLoading = true;
       state.replies.push(action.payload);
     },
+    //풀필드
     [__deleteReplies.fulfilled]: (state, action) => {
       console.log("action.payload", action.payload);
       console.log("action", action);
       state.replies = state.replies.filter((item) => {
-        // console.log(action.payload);
-        // 이게 왜?.. action.payload 로 안들어오는 이유
+        console.log(action.payload);
+        // payload에 담아주지 않았기 때문에 id는 메타에 담겨서 내려옴
         return item.id !== action.meta.arg;
       });
     },
