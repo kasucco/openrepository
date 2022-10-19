@@ -4,28 +4,33 @@ import Layout from "../components/share/Layout";
 import Button from "../components/share/Buttons";
 import { useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addReview } from "../redux/modules/bookSlice";
+import { __updateReviews } from "../redux/modules/bookSlice";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { __createReviews } from "../redux/modules/bookSlice";
 import useInput from "../hooks/useInput";
 
-function Form() {
+function Modify() {
   const [inputs, changeHandle] = useInput();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const globalReview = useSelector((state) => state.book.review);
 
-  const onclickSubmitHandler = () => {
-    dispatch(__createReviews(inputs));
-    navigate("/");
+  const onclickEditHandler = () => {
+    const updateValue = {
+      id: globalReview.id,
+      title: inputs.title,
+      content: inputs.content,
+    };
+    dispatch(__updateReviews(updateValue));
   };
 
   const isValid = inputs.title.length >= 10 && inputs.content.length >= 10;
+
   const handleButtonValid = () => {
     if (!isValid) {
       alert("10글자 이상 입력하세요");
     } else {
-      onclickSubmitHandler();
+      onclickEditHandler();
     }
   };
   return (
@@ -47,8 +52,9 @@ function Form() {
               onChange={changeHandle}
               type="text"
               name="title"
-              value={inputs.title}
-              placeholder="10자 이상 입력해주세요"
+              placeholder="10자 이상 수정할 내용을 입력해주세요"
+              defaultValue={globalReview.title}
+              maxLength="20"
             ></Titleinput>
           </FlexBox>
           <FlexBox>
@@ -57,8 +63,9 @@ function Form() {
               onChange={changeHandle}
               type="text"
               name="content"
-              value={inputs.content}
-              placeholder="10자 이상 입력해주세요"
+              defaultValue={globalReview.content}
+              placeholder="10자 이상 수정할 내용을 입력해주세요"
+              maxLength="200"
             ></Contentinput>
           </FlexBox>
         </Inputbox>
@@ -68,16 +75,15 @@ function Form() {
           onClick={() => {
             handleButtonValid();
           }}
-          disabled={inputs.content === "" || inputs.title === ""}
         >
-          작성완료
+          수정완료
         </Button>
       </Buttonbox>
     </Layout>
   );
 }
 
-export default Form;
+export default Modify;
 
 const Formbox = styled.div`
   padding: 20px;

@@ -1,18 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom/dist";
 import styled from "styled-components";
 import Layout from "../components/share/Layout";
 import Button from "../components/share/Buttons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { __getReviews } from "../redux/modules/bookSlice";
+
 function Main() {
   const navigate = useNavigate();
-  const review = useSelector((state) => state.book.reviews);
+  const reviews = useSelector((state) => state.book.reviews);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(__getReviews());
+  }, []);
+
   return (
     <Layout>
       <Button onClick={() => navigate("form")}>등록하기</Button>
       <div>
         <GridUl>
-          {review.map((item) => {
+          {reviews.map((item) => {
             return (
               <LiSize
                 onClick={() => {
