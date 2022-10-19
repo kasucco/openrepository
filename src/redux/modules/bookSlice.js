@@ -33,6 +33,23 @@ export const __getReviews = createAsyncThunk(
       const data = await axios.get(
         "https://hanghae-react-week3.herokuapp.com/reviews"
       );
+
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const __getReviewOne = createAsyncThunk(
+  "book/getReviewOne",
+  async (payload, thunkAPI) => {
+    try {
+      console.log(payload);
+      const data = await axios.get(
+        `https://hanghae-react-week3.herokuapp.com/reviews/${payload}`
+      );
+
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -62,7 +79,7 @@ export const __deleteReviews = createAsyncThunk(
       const data = await axios.delete(
         `https://hanghae-react-week3.herokuapp.com/reviews/${payload}`
       );
-      return thunkAPI.fulfillWithValue(data.data);
+      return payload;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -77,7 +94,8 @@ export const __updateReviews = createAsyncThunk(
         `https://hanghae-react-week3.herokuapp.com/reviews/${payload.id}`,
         payload
       );
-      return thunkAPI.fulfillWithValue(data.data);
+      console.log("수정하기", data, payload);
+      return payload;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -125,17 +143,24 @@ const bookSlice = createSlice({
       state.isLoading = true;
       state.reviews.push(payload);
     },
-    [__deleteReviews.fulfilled]: (state, action) => {
+    [__deleteReviews.fulfilled]: (state, { payload }) => {
       state.isLoading = true;
-      console.log(state.reviews);
       state.reviews = state.reviews.filter((item) => {
-        return item.id !== action.payload;
+        return item.id !== payload;
       });
     },
     [__updateReviews.fulfilled]: (state, { payload }) => {
       state.isLoading = true;
-      console.log(payload);
-      state.reviews.push(payload);
+      state.reviews.forEach((element) => {
+        if (element.id === payload.id) {
+          element.title = payload.title;
+          element.content = payload.content;
+        } else return element;
+      });
+    },
+    [__getReviewOne.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.review = action.payload;
     },
   },
 });

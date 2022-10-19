@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Button from "../components/share/Buttons";
 import { __deleteReviews } from "../redux/modules/bookSlice";
+import { __getReviewOne } from "../redux/modules/bookSlice";
 
 const DetailList = () => {
   const globalReview = useSelector((state) => state.book.review);
@@ -19,7 +20,7 @@ const DetailList = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(selectReview(reviewid.id));
+    dispatch(selectReview(reviewid.id), dispatch(__getReviewOne(reviewid.id)));
   }, []);
 
   const onDeleteHandler = (globalReviewId) => {
@@ -37,8 +38,8 @@ const DetailList = () => {
         이전으로
       </Button>
       <TitleBox>
-        <h1>{globalReview.title}</h1>
-        <h2>{globalReview.content}</h2>
+        <h1>{globalReview?.title}</h1>
+        <h2>{globalReview?.content}</h2>
       </TitleBox>
 
       <ButtonBox>
