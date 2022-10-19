@@ -106,6 +106,9 @@ const replySlice = createSlice({
       });
     },
     [__patchReplies.fulfilled]: (state, { payload }) => {
+      state.replies.forEach((reple) => {
+        if (reple.id === payload.id) return (reple.reply = payload.reply);
+        return reple;
       console.log(payload);
       state.replies.forEach((item) => {
         if (item.id === payload.id) return (item.reply = payload.reply);
