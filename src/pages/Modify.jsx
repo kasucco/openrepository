@@ -64,6 +64,7 @@ function Modify() {
               name="content"
               defaultValue={globalReview.content}
               placeholder="10자 이상 수정할 내용을 입력해주세요"
+
             ></Contentinput>
           </FlexBox>
         </Inputbox>
@@ -72,7 +73,6 @@ function Modify() {
         <Button
           onClick={() => {
             handleButtonValid();
-            navigate("/");
           }}
         >
           수정완료

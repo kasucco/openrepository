@@ -9,6 +9,7 @@ import {
   __postReplies,
   __getReplies,
   __deleteReplies,
+  __patchReplies,
 } from "../redux/modules/replySlice";
 import { useNavigate } from "react-router-dom";
 
@@ -33,6 +34,9 @@ function DetailReplies() {
   //리듀서로 값을 변화시키는 동시에 비동기로 서버에 저장한다.
 
   const replyRef = useRef();
+
+  const editRef = useRef();
+
   const id = Date.now();
 
   function dispatchAdd() {
@@ -56,12 +60,67 @@ function DetailReplies() {
     dispatch(__getReplies());
   }, []);
 
+  //모드 사용하기 실험
+  const [mode, setMode] = useState("READ");
+
+  // READ 모드일 때 댓글 값 관리 state, 그리고 item id도
+  const [itemValue, setItemValue] = useState(null);
+  const [_itemId, setItemId] = useState(null);
+
+  // 모드변경 토글 (인자값으로 받아오는 댓글값)
+  function modeTogle(itemReply, itemId) {
+    if (mode === "EDIT") {
+      const editValue = editRef.current.value;
+      const patchObject = { itemId: _itemId, editValue };
+      setMode("READ");
+      dispatch(__patchReplies(patchObject));
+    } else if (mode === "READ") {
+      setMode("EDIT");
+      setItemValue(itemReply);
+      setItemId(itemId);
+    }
+  }
+
+  let contents = null;
+
+  if (mode === "READ") {
+    contents = GlobalReply.map((item) => {
+      //맵을 돌릴 때 id가 같은 댓글만 띄워줘!
+      if (pageId.id === item.pageId.id) {
+        return (
+          <div key={item.id}>
+            {item.reply}
+            <Button
+              onClick={() => {
+                dispatchDelete(item.id);
+              }}
+            >
+              댓글삭제하기
+            </Button>
+            <Button onClick={() => modeTogle(item.reply, item.id)}>
+              댓글수정하기
+            </Button>
+          </div>
+        );
+      }
+    });
+  } else if (mode === "EDIT") {
+    contents = (
+      <div>
+        <input defaultValue={itemValue} ref={editRef} />
+        <Button onClick={() => modeTogle()}>수정완료</Button>
+      </div>
+    );
+  }
+
   return (
     <FlexColumn>
       <FlexRow>
         <InputSt placeholder="댓글을 입력해주세요" ref={replyRef} />
         <Button onClick={() => dispatchAdd()}>댓글 등록하기</Button>
       </FlexRow>
+      
+      {contents}
 
       {GlobalReply.map((item) => {
         //맵을 돌릴 때 id가 같은 댓글만 띄워줘!
