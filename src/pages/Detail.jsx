@@ -1,3 +1,4 @@
+
 import React from "react";
 import DetailList from "../components/DetailList";
 import DetailReplies from "../components/DetailReplies";
