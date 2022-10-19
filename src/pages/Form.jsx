@@ -67,6 +67,7 @@ function Form() {
             handleButtonValid();
             navigate("/");
           }}
+          disabled={!inputs}
         >
           작성완료
         </Button>

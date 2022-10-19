@@ -30,7 +30,9 @@ export const __getReviews = createAsyncThunk(
   "book/getReviews",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get("http://localhost:3001/reviews");
+      const data = await axios.get(
+        "https://hanghae-react-week3.herokuapp.com/reviews"
+      );
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -42,7 +44,10 @@ export const __createReviews = createAsyncThunk(
   "book/createReviews",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.post("http://localhost:3001/reviews", payload);
+      const data = await axios.post(
+        "https://hanghae-react-week3.herokuapp.com/reviews",
+        payload
+      );
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -55,7 +60,7 @@ export const __deleteReviews = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.delete(
-        `http://localhost:3001/reviews/${payload}`
+        `https://hanghae-react-week3.herokuapp.com/reviews/${payload}`
       );
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
@@ -69,7 +74,7 @@ export const __updateReviews = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.patch(
-        `http://localhost:3001/reviews/${payload.id}`,
+        `https://hanghae-react-week3.herokuapp.com/reviews/${payload.id}`,
         payload
       );
       return thunkAPI.fulfillWithValue(data.data);
