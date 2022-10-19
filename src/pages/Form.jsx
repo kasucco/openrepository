@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { __createReviews } from "../redux/modules/bookSlice";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { __createReviews } from "../redux/modules/bookSlice";
 import useInput from "../hooks/useInput";
 
 function Form() {
