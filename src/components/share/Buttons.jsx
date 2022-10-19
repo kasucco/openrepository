@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-function Button({ children, onClick }) {
+function Button({ children, onClick, disabled }) {
   // eslint-disable-next-line react/jsx-filename-extension
   return (
     <BtnCover>
-      <BtnStyle type="button" onClick={onClick}>
+      <BtnStyle type="button" onClick={onClick} disabled={disabled}>
         {children}
       </BtnStyle>
     </BtnCover>

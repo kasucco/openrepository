@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { __createReviews } from "../redux/modules/bookSlice";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { __createReviews } from "../redux/modules/bookSlice";
 import useInput from "../hooks/useInput";
 
 function Form() {
@@ -16,6 +17,7 @@ function Form() {
 
   const onclickSubmitHandler = () => {
     dispatch(__createReviews(inputs));
+    navigate("/");
   };
 
   const isValid = inputs.title.length >= 10 && inputs.content.length >= 10;
@@ -65,8 +67,8 @@ function Form() {
         <Button
           onClick={() => {
             handleButtonValid();
-            navigate("/");
           }}
+          disabled={inputs.content === "" || inputs.title === ""}
         >
           작성완료
         </Button>
