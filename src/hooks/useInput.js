@@ -10,13 +10,12 @@ function useInput() {
   const changeHandle = useCallback(
     (e) => {
       const { name, value } = e.target;
-      console.log(name);
+
       setInputs({ ...inputs, [name]: value, id: Date.now() });
     },
     [inputs, setInputs]
   );
 
-  console.log(inputs);
   return [inputs, changeHandle];
 }
 
