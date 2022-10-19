@@ -1,6 +1,13 @@
 @font-face {
-    font-family: 'ONE-Mobile-Title';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-Title.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+  font-family: "ONE-Mobile-Title";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-Title.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+.jejugothic * {
+  font-family: "Jeju Gothic", sans-serif;
 }
