@@ -11,6 +11,8 @@ function useInput() {
     (e) => {
       const { name, value } = e.target;
       setInputs({ ...inputs, [name]: value, id: Date.now() });
+      if (value.length > value.maxLength)
+        value.value = value.value.slice(0, value.maxLength);
     },
     [inputs, setInputs]
   );

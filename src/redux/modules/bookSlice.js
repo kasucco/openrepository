@@ -4,23 +4,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-  reviews: [
-    {
-      id: 1,
-      title: "책1 제목",
-      content: "책1 내용",
-    },
-    {
-      id: 2,
-      title: "책2 제목",
-      content: "책2 내용",
-    },
-    {
-      id: 3,
-      title: "책3 제목",
-      content: "책3 내용",
-    },
-  ],
+  reviews: [],
   isLoading: false,
   error: null,
   review: {},
@@ -59,10 +43,10 @@ export const __deleteReviews = createAsyncThunk(
   "book/deleteReviews",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.delete(
+      await axios.delete(
         `https://hanghae-react-week3.herokuapp.com/reviews/${payload}`
       );
-      return thunkAPI.fulfillWithValue(data.data);
+      return payload;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -125,15 +109,14 @@ const bookSlice = createSlice({
       state.isLoading = true;
       state.reviews.push(payload);
     },
-    [__deleteReviews.fulfilled]: (state, action) => {
+    [__deleteReviews.fulfilled]: (state, { payload }) => {
       state.isLoading = true;
       state.reviews = state.reviews.filter((item) => {
-        return item.id !== action.payload;
+        return item.id !== payload;
       });
     },
     [__updateReviews.fulfilled]: (state, { payload }) => {
       state.isLoading = true;
-      console.log(payload);
       state.reviews.push(payload);
     },
   },

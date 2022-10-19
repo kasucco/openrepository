@@ -100,7 +100,12 @@ const replySlice = createSlice({
         return item.id !== action.meta.arg;
       });
     },
-    [__patchReplies.fulfilled]: (state, action) => {},
+    [__patchReplies.fulfilled]: (state, { payload }) => {
+      state.replies.forEach((reple) => {
+        if (reple.id === payload.id) return (reple.reply = payload.reply);
+        return reple;
+      });
+    },
   },
 });
 
