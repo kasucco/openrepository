@@ -9,6 +9,7 @@ import book from "../modules/bookSlice";
 
 const store = configureStore({
   reducer: { reply: reply, book: book },
+  devTools: process.env.NODE_ENV === "development",
 });
 
 export default store;

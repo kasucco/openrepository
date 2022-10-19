@@ -25,8 +25,7 @@ function Modify() {
     dispatch(__updateReviews(updateValue));
   };
 
-  const isValid = inputs.title.length >= 10 && inputs.content.length >= 10;
-
+  const isValid = inputs.title.length >= 1 && inputs.content.length >= 1;
   const handleButtonValid = () => {
     if (!isValid) {
       alert("10글자 이상 입력하세요");

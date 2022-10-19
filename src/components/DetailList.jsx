@@ -38,8 +38,8 @@ const DetailList = () => {
         이전으로
       </Button>
       <TitleBox>
-        <h1>{globalReview?.title}</h1>
-        <h2>{globalReview?.content}</h2>
+        <TitleH1>{globalReview?.title}</TitleH1>
+        <TitleH2>{globalReview?.content}</TitleH2>
       </TitleBox>
 
       <ButtonBox>
@@ -88,7 +88,7 @@ const TitleBox = styled.div`
 
 const TitleH1 = styled.h1`
   display: inline-block;
-  width: 200px;
+  width: 500px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -96,7 +96,7 @@ const TitleH1 = styled.h1`
 
 const TitleH2 = styled.h2`
   display: inline-block;
-  width: 200px;
+  width: 500px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
