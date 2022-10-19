@@ -55,6 +55,25 @@ export const __deleteReplies = createAsyncThunk(
   }
 );
 
+export const __patchReplies = createAsyncThunk(
+  "replies/patchReplies",
+  async (payload, thunkAPI) => {
+    console.log("패치 페이로드", payload);
+    console.log(payload.itemId);
+    try {
+      const data = await axios.patch(
+        `http://localhost:3001/replies/${payload.itemId}`,
+        { reply: payload.editValue }
+      );
+
+      //payload를 return 해야 아래 reducer에서 값을 받아 쓸 수 있음.
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 const replySlice = createSlice({
   name: "reply",
   initialState,
@@ -73,19 +92,18 @@ const replySlice = createSlice({
     },
     //풀필드
     [__deleteReplies.fulfilled]: (state, action) => {
-      console.log("action.payload", action.payload);
-      console.log("action", action);
+      // console.log("action.payload", action.payload);
+      // console.log("action", action);
       state.replies = state.replies.filter((item) => {
-        console.log(action.payload);
+        // console.log(action.payload);
         // payload에 담아주지 않았기 때문에 id는 메타에 담겨서 내려옴
         return item.id !== action.meta.arg;
       });
     },
+    [__patchReplies.fulfilled]: (state, action) => {},
   },
 });
 
 // 액션크리에이터는 컴포넌트에서 사용하기 위해 export 하고
-export const { addReply, deleteReply, editReply, fetchReply } =
-  replySlice.actions;
 // reducer 는 configStore에 등록하기 위해 export default 합니다.
 export default replySlice.reducer;
