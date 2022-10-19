@@ -11,7 +11,9 @@ import { __deleteReviews } from "../redux/modules/bookSlice";
 
 const DetailList = () => {
   const globalReview = useSelector((state) => state.book.review);
+  console.log(globalReview);
   const reviewid = useParams();
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -38,8 +40,19 @@ const DetailList = () => {
         >
           이전으로
         </Button>
-        <Button>수정하기</Button>
-        <Button onClick={() => onDeleteHandler(globalReview.id)}>
+        <Button
+          onClick={() => {
+            navigate("/modify");
+          }}
+        >
+          수정하기
+        </Button>
+        <Button
+          onClick={() => {
+            onDeleteHandler(globalReview.id);
+            navigate("/");
+          }}
+        >
           삭제하기
         </Button>
       </ButtonBox>
