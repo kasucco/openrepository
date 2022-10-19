@@ -11,21 +11,16 @@ import useInput from "../hooks/useInput";
 import { useHistory } from "react-router-dom";
 
 function Modify() {
-  const [inputs, changeHandle] = useInput();
+  const globalReview = useSelector((state) => state.book.review);
+  const [inputs, changeHandle] = useInput(globalReview);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const globalReview = useSelector((state) => state.book.review);
 
   const onclickEditHandler = () => {
-    const updateValue = {
-      id: globalReview.id,
-      title: inputs.title,
-      content: inputs.content,
-    };
-    dispatch(__updateReviews(updateValue));
+    dispatch(__updateReviews(inputs));
   };
 
-  const isValid = inputs.title.length >= 1 && inputs.content.length >= 1;
+  const isValid = inputs.title.length >= 10 && inputs.content.length >= 10;
   const handleButtonValid = () => {
     if (!isValid) {
       alert("10글자 이상 입력하세요");
@@ -54,7 +49,8 @@ function Modify() {
               type="text"
               name="title"
               placeholder="10자 이상 수정할 내용을 입력해주세요"
-              defaultValue={globalReview.title}
+              value={inputs.title}
+              // defaultValue={globalReview.title}
               maxLength={20}
             ></Titleinput>
           </FlexBox>
@@ -64,7 +60,8 @@ function Modify() {
               onChange={changeHandle}
               type="text"
               name="content"
-              defaultValue={globalReview.content}
+              value={inputs.content}
+              // defaultValue={globalReview.content}
               placeholder="10자 이상 수정할 내용을 입력해주세요"
               maxLength={200}
             ></Contentinput>

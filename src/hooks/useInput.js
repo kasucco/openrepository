@@ -1,21 +1,14 @@
 import React, { useCallback, useState } from "react";
 
-function useInput() {
-  const [inputs, setInputs] = useState({
-    id: "",
-    title: "",
-    content: "",
-  });
+function useInput(initialState) {
+  const [inputs, setInputs] = useState(initialState);
 
-  const changeHandle = useCallback(
-    (e) => {
-      const { name, value } = e.target;
-      setInputs({ ...inputs, [name]: value, id: Date.now() });
-      if (value.length > value.maxLength)
-        value.value = value.value.slice(0, value.maxLength);
-    },
-    [inputs, setInputs]
-  );
+  const changeHandle = (e) => {
+    const { name, value } = e.target;
+    setInputs({ ...inputs, [name]: value, id: initialState.id });
+    if (value.length > value.maxLength)
+      value.value = value.value.slice(0, value.maxLength);
+  };
 
   return [inputs, changeHandle];
 }

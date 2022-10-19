@@ -9,7 +9,8 @@ const initialState = {
   error: null,
   review: {},
 };
-
+const url = process.env.REACT_APP_URL1;
+console.log(process.env.REACT_APP_URL1);
 export const __getReviews = createAsyncThunk(
   "book/getReviews",
   async (payload, thunkAPI) => {
@@ -29,7 +30,6 @@ export const __getReviewOne = createAsyncThunk(
   "book/getReviewOne",
   async (payload, thunkAPI) => {
     try {
-      console.log(payload);
       const data = await axios.get(
         `https://hanghae-react-week3.herokuapp.com/reviews/${payload}`
       );
@@ -45,10 +45,7 @@ export const __createReviews = createAsyncThunk(
   "book/createReviews",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.post(
-        "https://hanghae-react-week3.herokuapp.com/reviews",
-        payload
-      );
+      const data = await axios.post(url, payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

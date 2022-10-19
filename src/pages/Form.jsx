@@ -10,7 +10,11 @@ import { useNavigate } from "react-router-dom";
 import useInput from "../hooks/useInput";
 
 function Form() {
-  const [inputs, changeHandle] = useInput();
+  const [inputs, changeHandle] = useInput({
+    id: Date.now(),
+    title: "",
+    content: "",
+  });
   const navigate = useNavigate();
   const dispatch = useDispatch();
 

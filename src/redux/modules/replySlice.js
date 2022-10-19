@@ -22,7 +22,6 @@ export const __getReplies = createAsyncThunk(
       const data = await axios.get(
         "https://hanghae-react-week3.herokuapp.com/replies"
       );
-      console.log(data.data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -87,7 +86,6 @@ const replySlice = createSlice({
     //겟
     [__getReplies.fulfilled]: (state, action) => {
       state.isLoading = true;
-      console.log("get", action.payload);
       state.replies = action.payload;
     },
     //포스트
