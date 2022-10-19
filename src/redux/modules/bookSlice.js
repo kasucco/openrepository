@@ -120,11 +120,10 @@ const bookSlice = createSlice({
       state.isLoading = true;
       state.reviews.push(payload);
     },
-    [__deleteReviews.fulfilled]: (state, { payload }) => {
+    [__deleteReviews.fulfilled]: (state, action) => {
       state.isLoading = true;
       state.reviews = state.reviews.filter((item) => {
-        console.log(item.id, payload);
-        return item.id !== payload;
+        return item.id !== action.payload;
       });
     },
     [__updateReviews.fulfilled]: (state, { payload }) => {
