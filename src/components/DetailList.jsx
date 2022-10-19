@@ -85,3 +85,19 @@ const TitleBox = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+const TitleH1 = styled.h1`
+  display: inline-block;
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+const TitleH2 = styled.h2`
+  display: inline-block;
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;

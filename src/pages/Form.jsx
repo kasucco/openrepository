@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { __createReviews } from "../redux/modules/bookSlice";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
 import useInput from "../hooks/useInput";
 
 function Form() {
@@ -49,6 +48,7 @@ function Form() {
               name="title"
               value={inputs.title}
               placeholder="10자 이상 입력해주세요"
+              maxLength={20}
             ></Titleinput>
           </FlexBox>
           <FlexBox>
@@ -59,6 +59,7 @@ function Form() {
               name="content"
               value={inputs.content}
               placeholder="10자 이상 입력해주세요"
+              maxLength={200}
             ></Contentinput>
           </FlexBox>
         </Inputbox>

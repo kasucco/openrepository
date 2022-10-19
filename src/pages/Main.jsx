@@ -4,8 +4,6 @@ import styled from "styled-components";
 import Layout from "../components/share/Layout";
 import Button from "../components/share/Buttons";
 import { useSelector } from "react-redux";
-
-import axios from "axios";
 import { __getReviews } from "../redux/modules/bookSlice";
 import { useDispatch } from "react-redux";
 
@@ -22,7 +20,7 @@ function Main() {
   return (
     <Layout>
       <Button onClick={() => navigate("form")}>등록하기</Button>
-      <div>
+      <TextAll>
         <GridUl>
           {reviews.map((item) => {
             return (
@@ -33,12 +31,12 @@ function Main() {
                 key={item.id}
               >
                 <TextSize>{item.title}</TextSize>
-                <p>{item.content}</p>
+                <TextSizeP>{item.content}</TextSizeP>
               </LiSize>
             );
           })}
         </GridUl>
-      </div>
+      </TextAll>
     </Layout>
   );
 }
@@ -50,10 +48,11 @@ const GridUl = styled.ul`
   grid-template-columns: repeat(2, 1fr);
   padding-left: 0;
   grid-gap: 30px;
+  width: 100%;
 `;
 
 const LiSize = styled.li`
-  width: auto;
+  width: 100%;
   box-sizing: border-box;
   padding: 20px;
   border-radius: 10px;
@@ -66,4 +65,19 @@ const LiSize = styled.li`
 
 const TextSize = styled.h1`
   font-size: 20px;
+  width: 500px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+const TextSizeP = styled.p`
+  width: 500px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+const TextAll = styled.div`
+  display: flex;
 `;

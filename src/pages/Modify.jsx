@@ -8,6 +8,7 @@ import { __updateReviews } from "../redux/modules/bookSlice";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useInput from "../hooks/useInput";
+import { useHistory } from "react-router-dom";
 
 function Modify() {
   const [inputs, changeHandle] = useInput();
@@ -55,6 +56,7 @@ function Modify() {
               name="title"
               placeholder="10자 이상 수정할 내용을 입력해주세요"
               defaultValue={globalReview.title}
+              maxLength={20}
             ></Titleinput>
           </FlexBox>
           <FlexBox>
@@ -65,6 +67,7 @@ function Modify() {
               name="content"
               defaultValue={globalReview.content}
               placeholder="10자 이상 수정할 내용을 입력해주세요"
+              maxLength={200}
             ></Contentinput>
           </FlexBox>
         </Inputbox>
