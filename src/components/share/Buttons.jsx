@@ -16,6 +16,7 @@ export default Button;
 
 const BtnCover = styled.div`
   text-align: right;
+  flex-shrink: 100;
 `;
 
 const BtnStyle = styled.button`
