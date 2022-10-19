@@ -12,6 +12,7 @@ import {
   __patchReplies,
 } from "../redux/modules/replySlice";
 import { useNavigate } from "react-router-dom";
+import "../font/font.css";
 
 import Button from "../components/share/Buttons";
 import Layout from "./share/Layout";
@@ -86,19 +87,21 @@ function DetailReplies() {
       //맵을 돌릴 때 id가 같은 댓글만 띄워줘!
       if (pageId.id === item.pageId.id) {
         return (
-          <div key={item.id}>
+          <ContentsBox key={item.id}>
             {item.reply}
-            <Button
-              onClick={() => {
-                dispatchDelete(item.id);
-              }}
-            >
-              댓글삭제하기
-            </Button>
-            <Button onClick={() => modeTogle(item.reply, item.id)}>
-              댓글수정하기
-            </Button>
-          </div>
+            <ButtonBox>
+              <Button
+                onClick={() => {
+                  dispatchDelete(item.id);
+                }}
+              >
+                댓글삭제하기
+              </Button>
+              <Button onClick={() => modeTogle(item.reply, item.id)}>
+                댓글수정하기
+              </Button>
+            </ButtonBox>
+          </ContentsBox>
         );
       }
     });
@@ -113,10 +116,17 @@ function DetailReplies() {
   return (
     <FlexColumn>
       <FlexRow>
-        <InputSt placeholder="댓글을 입력해주세요" ref={replyRef} />
+        <InputSt
+          maxLength="30"
+          placeholder="30자 이내로 댓글을 입력해주세요"
+          ref={replyRef}
+        />
         <Button onClick={() => dispatchAdd()}>댓글 등록하기</Button>
       </FlexRow>
-      {contents}
+      <TitleBox>
+        <ReplyTitle>댓글</ReplyTitle>
+        {contents}
+      </TitleBox>
     </FlexColumn>
   );
 }
@@ -150,18 +160,26 @@ const InputSt = styled.input`
 
 const ContentsBox = styled.div`
   display: flex;
-  flex-direction: row;
-  width: auto;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0;
+  border-bottom: 1px solid #000;
+  padding: 15px;
 `;
 
 const TitleBox = styled.div`
-  width: auto;
-  padding: 50px 0;
+  width: 100%;
+  margin: 20px 0;
+  margin-top: 50px;
 `;
 
 const ButtonBox = styled.div`
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 20px;
+`;
+
+const ReplyTitle = styled.h2`
+  font-family: "Jeju Gothic", sans-serif;
 `;
