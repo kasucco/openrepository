@@ -95,7 +95,7 @@ const replySlice = createSlice({
       // console.log("action.payload", action.payload);
       // console.log("action", action);
       state.replies = state.replies.filter((item) => {
-        // console.log(action.payload);
+
         // payload에 담아주지 않았기 때문에 id는 메타에 담겨서 내려옴
         return item.id !== action.meta.arg;
       });

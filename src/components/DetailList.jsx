@@ -11,6 +11,7 @@ import { __deleteReviews } from "../redux/modules/bookSlice";
 
 const DetailList = () => {
   const globalReview = useSelector((state) => state.book.review);
+
   const reviewid = useParams();
 
   const navigate = useNavigate();

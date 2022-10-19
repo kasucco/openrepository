@@ -54,7 +54,6 @@ function Modify() {
               name="title"
               placeholder="10자 이상 수정할 내용을 입력해주세요"
               defaultValue={globalReview.title}
-              maxLength="20"
             ></Titleinput>
           </FlexBox>
           <FlexBox>
@@ -65,7 +64,7 @@ function Modify() {
               name="content"
               defaultValue={globalReview.content}
               placeholder="10자 이상 수정할 내용을 입력해주세요"
-              maxLength="200"
+
             ></Contentinput>
           </FlexBox>
         </Inputbox>
