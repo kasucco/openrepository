@@ -50,7 +50,7 @@ export const __deleteReplies = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.delete(
-        `https://hanghae-react-week3.herokuapp.com/replies${payload}`
+        `https://hanghae-react-week3.herokuapp.com/replies/${payload}`
       );
       //payload를 return 해야 아래 reducer에서 값을 받아 쓸 수 있음.
       return data.data;
@@ -67,7 +67,7 @@ export const __patchReplies = createAsyncThunk(
     console.log(payload.itemId);
     try {
       const data = await axios.patch(
-        `https://hanghae-react-week3.herokuapp.com/replies${payload.itemId}`,
+        `https://hanghae-react-week3.herokuapp.com/replies/${payload.itemId}`,
         { reply: payload.editValue }
       );
 
