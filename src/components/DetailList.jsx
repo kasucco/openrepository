@@ -24,23 +24,24 @@ const DetailList = () => {
 
   const onDeleteHandler = (globalReviewId) => {
     dispatch(__deleteReviews(globalReviewId));
+    navigate("/");
   };
 
   return (
     <ContentsBox>
+      <Button
+        onClick={() => {
+          navigate("/");
+        }}
+      >
+        이전으로
+      </Button>
       <TitleBox>
         <h1>{globalReview.title}</h1>
         <h2>{globalReview.content}</h2>
       </TitleBox>
 
       <ButtonBox>
-        <Button
-          onClick={() => {
-            navigate("/");
-          }}
-        >
-          이전으로
-        </Button>
         <Button
           onClick={() => {
             navigate("/modify");
@@ -51,7 +52,6 @@ const DetailList = () => {
         <Button
           onClick={() => {
             onDeleteHandler(globalReview.id);
-            navigate("/");
           }}
         >
           삭제하기
