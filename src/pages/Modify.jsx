@@ -52,8 +52,8 @@ function Modify() {
               onChange={changeHandle}
               type="text"
               name="title"
-              value={inputs.title}
               placeholder="10자 이상 수정할 내용을 입력해주세요"
+              defaultValue={globalReview.title}
             ></Titleinput>
           </FlexBox>
           <FlexBox>
@@ -62,7 +62,7 @@ function Modify() {
               onChange={changeHandle}
               type="text"
               name="content"
-              value={inputs.content}
+              defaultValue={globalReview.content}
               placeholder="10자 이상 수정할 내용을 입력해주세요"
             ></Contentinput>
           </FlexBox>
