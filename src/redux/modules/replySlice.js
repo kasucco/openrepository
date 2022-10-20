@@ -1,30 +1,110 @@
 // src/redux/modules/replySlice.js
 
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
-const initialState = { reply: ["안녕하세요"] };
+// const initialState = {
+//   replies: [],
+//   isLoading: false,
+//   error: null,
+// };
+
+const initialState = {
+  replies: [],
+  isLoading: false,
+  error: null,
+};
+const url2 = process.env.REACT_APP_URL2;
+
+export const __getReplies = createAsyncThunk(
+  "replies/getReplies",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await axios.get(url2);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const __postReplies = createAsyncThunk(
+  "replies/postReplies",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await axios.post(url2, payload);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const __deleteReplies = createAsyncThunk(
+  "replies/deleteReplies",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await axios.delete(url2 / `${payload}`);
+      //payload를 return 해야 아래 reducer에서 값을 받아 쓸 수 있음.
+      return data.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const __patchReplies = createAsyncThunk(
+  "replies/patchReplies",
+  async (payload, thunkAPI) => {
+    console.log("패치 페이로드", payload);
+    console.log(payload.itemId);
+    try {
+      const data = await axios.patch(url2`${payload.itemId}`, {
+        reply: payload.editValue,
+      });
+
+      //payload를 return 해야 아래 reducer에서 값을 받아 쓸 수 있음.
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 const replySlice = createSlice({
   name: "reply",
   initialState,
-  reducers: {
-    // addReply: (state, action) => {
-    //   {
-    //     [...state.reply, action.payload];
-    //   }
-    // },
-    deleteReply: (state, action) => {
-      state.filter((item) => {
-        if (state.id !== action.payload.id) {
-          return item;
-        }
+  reducers: {},
+  extraReducers: {
+    //겟
+    [__getReplies.fulfilled]: (state, action) => {
+      state.isLoading = true;
+      state.replies = action.payload;
+    },
+    //포스트
+    [__postReplies.fulfilled]: (state, action) => {
+      state.isLoading = true;
+      state.replies.push(action.payload);
+    },
+    //딜리트
+    [__deleteReplies.fulfilled]: (state, action) => {
+      // console.log("action.payload", action.payload);
+      // console.log("action", action);
+      state.replies = state.replies.filter((item) => {
+        // console.log(action.payload);
+        // payload에 담아주지 않았기 때문에 id는 메타에 담겨서 내려옴
+        return item.id !== action.meta.arg;
       });
     },
-    // editReply: (state, action) => {},
+    [__patchReplies.fulfilled]: (state, { payload }) => {
+      state.replies.forEach((reple) => {
+        if (reple.id === payload.id) return (reple.reply = payload.reply);
+        return reple;
+      });
+    },
   },
 });
 
 // 액션크리에이터는 컴포넌트에서 사용하기 위해 export 하고
-export const { addReply, deleteReply } = replySlice.actions;
 // reducer 는 configStore에 등록하기 위해 export default 합니다.
 export default replySlice.reducer;
