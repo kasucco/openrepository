@@ -9,15 +9,13 @@ const initialState = {
   error: null,
   review: {},
 };
-const url = process.env.REACT_APP_URL1
+const url = process.env.REACT_APP_URL1;
 
 export const __getReviews = createAsyncThunk(
   "book/getReviews",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get(
-        url
-      );
+      const data = await axios.get(`http://localhost:3001/reviews`);
 
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
@@ -30,9 +28,7 @@ export const __getReviewOne = createAsyncThunk(
   "book/getReviewOne",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get(
-        url/`${payload}`
-      );
+      const data = await axios.get(`http://localhost:3001/reviews/${payload}`);
 
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
@@ -45,21 +41,18 @@ export const __createReviews = createAsyncThunk(
   "book/createReviews",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.post(url, payload);
+      const data = await axios.post(`http://localhost:3001/reviews`, payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
-
 export const __deleteReviews = createAsyncThunk(
   "book/deleteReviews",
   async (payload, thunkAPI) => {
     try {
-      await axios.delete(
-        url/`${payload}`
-      );
+      await axios.delete(`http://localhost:3001/reviews/${payload}`);
       return payload;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -72,7 +65,7 @@ export const __updateReviews = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.patch(
-        url/`${payload.id}`,
+        `http://localhost:3001/reviews/${payload.id}`,
         payload
       );
       console.log("수정하기", data, payload);

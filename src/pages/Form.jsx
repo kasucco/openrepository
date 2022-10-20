@@ -62,88 +62,86 @@ function Form() {
         }
       );
     };
-
-    const [inputs, changeHandle] = useInput({
-      id: Date.now(),
-      title: "",
-      content: "",
-    });
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-
-    const onclickSubmitHandler = () => {
-      dispatch(__createReviews(inputs));
-      navigate("/");
-    };
-
-    const isValid = inputs.title.length >= 10 && inputs.content.length >= 10;
-    const handleButtonValid = () => {
-      if (!isValid) {
-        alert("10글자 이상 입력하세요");
-      } else {
-        onclickSubmitHandler();
-      }
-    };
-
-    return (
-      <Layout>
-        <Buttonbox>
-          <Button
-            onClick={() => {
-              navigate("/");
-            }}
-          >
-            이전으로
-          </Button>
-        </Buttonbox>
-        <Formbox>
-          <Inputbox>
-            <FlexBox>
-              <LabelBox>이미지 업로드</LabelBox>
-              <input
-                type="file"
-                id="upload"
-                className="image-upload"
-                onChange={handleFileInput}
-              />
-            </FlexBox>
-            <FlexBox>
-              <LabelBox>제목</LabelBox>
-              <Titleinput
-                onChange={changeHandle}
-                type="text"
-                name="title"
-                value={inputs.title}
-                placeholder="10자 이상 입력해주세요"
-                maxLength={20}
-              ></Titleinput>
-            </FlexBox>
-            <FlexBox>
-              <LabelBox>내용</LabelBox>
-              <Contentinput
-                onChange={changeHandle}
-                type="text"
-                name="content"
-                value={inputs.content}
-                placeholder="10자 이상 입력해주세요"
-                maxLength={200}
-              ></Contentinput>
-            </FlexBox>
-          </Inputbox>
-        </Formbox>
-        <Buttonbox>
-          <Button
-            onClick={() => {
-              handleButtonValid();
-            }}
-            disabled={inputs.content === "" || inputs.title === ""}
-          >
-            작성완료
-          </Button>
-        </Buttonbox>
-      </Layout>
-    );
   };
+  const [inputs, changeHandle] = useInput({
+    id: Date.now(),
+    title: "",
+    content: "",
+  });
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const onclickSubmitHandler = () => {
+    dispatch(__createReviews(inputs));
+    navigate("/");
+  };
+
+  const isValid = inputs.title.length >= 10 && inputs.content.length >= 10;
+  const handleButtonValid = () => {
+    if (!isValid) {
+      alert("10글자 이상 입력하세요");
+    } else {
+      onclickSubmitHandler();
+    }
+  };
+  return (
+    <Layout>
+      <Buttonbox>
+        <Button
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          이전으로
+        </Button>
+      </Buttonbox>
+      <Formbox>
+        <Inputbox>
+          <FlexBox>
+            <LabelBox>이미지 업로드</LabelBox>
+            <input
+              type="file"
+              id="upload"
+              className="image-upload"
+              onChange={handleFileInput}
+            />
+          </FlexBox>
+          <FlexBox>
+            <LabelBox>제목</LabelBox>
+            <Titleinput
+              onChange={changeHandle}
+              type="text"
+              name="title"
+              value={inputs.title}
+              placeholder="10자 이상 입력해주세요"
+              maxLength={20}
+            ></Titleinput>
+          </FlexBox>
+          <FlexBox>
+            <LabelBox>내용</LabelBox>
+            <Contentinput
+              onChange={changeHandle}
+              type="text"
+              name="content"
+              value={inputs.content}
+              placeholder="10자 이상 입력해주세요"
+              maxLength={200}
+            ></Contentinput>
+          </FlexBox>
+        </Inputbox>
+      </Formbox>
+      <Buttonbox>
+        <Button
+          onClick={() => {
+            handleButtonValid();
+          }}
+          disabled={inputs.content === "" || inputs.title === ""}
+        >
+          작성완료
+        </Button>
+      </Buttonbox>
+    </Layout>
+  );
 }
 export default Form;
 
