@@ -9,14 +9,14 @@ const initialState = {
   error: null,
   review: {},
 };
-const url = process.env.REACT_APP_URL1;
-console.log(process.env.REACT_APP_URL1);
+const url = process.env.REACT_APP_URL1
+
 export const __getReviews = createAsyncThunk(
   "book/getReviews",
   async (payload, thunkAPI) => {
     try {
       const data = await axios.get(
-        "https://hanghae-react-week3.herokuapp.com/reviews"
+        url
       );
 
       return thunkAPI.fulfillWithValue(data.data);
@@ -31,7 +31,7 @@ export const __getReviewOne = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.get(
-        `https://hanghae-react-week3.herokuapp.com/reviews/${payload}`
+        url/`${payload}`
       );
 
       return thunkAPI.fulfillWithValue(data.data);
@@ -58,7 +58,7 @@ export const __deleteReviews = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       await axios.delete(
-        `https://hanghae-react-week3.herokuapp.com/reviews/${payload}`
+        url/`${payload}`
       );
       return payload;
     } catch (error) {
@@ -72,7 +72,7 @@ export const __updateReviews = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.patch(
-        `https://hanghae-react-week3.herokuapp.com/reviews/${payload.id}`,
+        url/`${payload.id}`,
         payload
       );
       console.log("수정하기", data, payload);

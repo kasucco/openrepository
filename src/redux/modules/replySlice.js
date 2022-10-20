@@ -14,14 +14,13 @@ const initialState = {
   isLoading: false,
   error: null,
 };
+const url2 = process.env.REACT_APP_URL2;
 
 export const __getReplies = createAsyncThunk(
   "replies/getReplies",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get(
-        "https://hanghae-react-week3.herokuapp.com/replies"
-      );
+      const data = await axios.get(url2);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -33,10 +32,7 @@ export const __postReplies = createAsyncThunk(
   "replies/postReplies",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.post(
-        "https://hanghae-react-week3.herokuapp.com/replies",
-        payload
-      );
+      const data = await axios.post(url2, payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -48,9 +44,7 @@ export const __deleteReplies = createAsyncThunk(
   "replies/deleteReplies",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.delete(
-        `https://hanghae-react-week3.herokuapp.com/replies/${payload}`
-      );
+      const data = await axios.delete(url2 / `${payload}`);
       //payload를 return 해야 아래 reducer에서 값을 받아 쓸 수 있음.
       return data.data;
     } catch (error) {
@@ -65,10 +59,9 @@ export const __patchReplies = createAsyncThunk(
     console.log("패치 페이로드", payload);
     console.log(payload.itemId);
     try {
-      const data = await axios.patch(
-        `https://hanghae-react-week3.herokuapp.com/replies/${payload.itemId}`,
-        { reply: payload.editValue }
-      );
+      const data = await axios.patch(url2`${payload.itemId}`, {
+        reply: payload.editValue,
+      });
 
       //payload를 return 해야 아래 reducer에서 값을 받아 쓸 수 있음.
       return thunkAPI.fulfillWithValue(data.data);
